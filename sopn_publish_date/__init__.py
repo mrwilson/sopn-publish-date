@@ -1,4 +1,4 @@
-from sopn_publish_date.calendars import working_days
+from sopn_publish_date.calendars import working_days, ScottishHolidays
 from datetime import datetime
 
 
@@ -14,6 +14,6 @@ def _sopn_publish_date(election_type, poll_date):
     if election_type in ["local", "parl"]:
         return poll_date - working_days(19)
     elif election_type == "sp":
-        return poll_date - working_days(23)
+        return poll_date - working_days(23, calendar=ScottishHolidays())
 
     raise Exception("Not implemented for election type: %s" % election_type)

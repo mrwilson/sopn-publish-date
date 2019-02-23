@@ -12,7 +12,27 @@ from pandas.tseries.holiday import (
 )
 
 
-class PublicHolidays(AbstractHolidayCalendar):
+class ScottishHolidays(AbstractHolidayCalendar):
+    rules = [
+        Holiday("New Years Day", month=1, day=1, observance=next_monday),
+        Holiday("2nd January", month=1, day=1, observance=next_monday),
+        GoodFriday,
+        Holiday(
+            "Early May bank holiday", month=5, day=1, offset=DateOffset(weekday=MO(1))
+        ),
+        Holiday(
+            "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
+        ),
+        Holiday(
+            "Summer bank holiday", month=8, day=1, offset=DateOffset(weekday=MO(1))
+        ),
+        Holiday("St Andrew's Day", month=11, day=30, observance=next_monday),
+        Holiday("Christmas Day", month=12, day=25, observance=next_monday),
+        Holiday("Boxing Day", month=12, day=26, observance=next_monday_or_tuesday),
+    ]
+
+
+class EnglandAndWalesHolidays(AbstractHolidayCalendar):
     rules = [
         Holiday("New Years Day", month=1, day=1, observance=next_monday),
         GoodFriday,
@@ -31,5 +51,5 @@ class PublicHolidays(AbstractHolidayCalendar):
     ]
 
 
-def working_days(count, calendar=PublicHolidays()):
+def working_days(count, calendar=EnglandAndWalesHolidays()):
     return CDay(count, calendar=calendar)
