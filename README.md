@@ -10,7 +10,7 @@ Turns out this is a non-trivial question, depending on:
 
 ## Usage
 
-This library defines a single function `sopn_publish_date` which takes a string `election_id` in [uk-election-ids]() format and returns a `datetime` representing the day when the SoPN is published.
+This library defines a single function `sopn_publish_date` which takes a string `election_id` in [uk-election-ids](https://elections.democracyclub.org.uk/reference_definition/) format and returns a `datetime` representing the day when the SoPN is published.
 
 ```python
 from sopn_publish_date import sopn_publish_date
