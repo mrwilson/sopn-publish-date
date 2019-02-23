@@ -42,7 +42,6 @@ Calendars:
  - [x] England + Wales
  - [x] Scotland
  - [ ] Northern Ireland
- - [ ] Isle of Man?
  - [ ] Fixed-date bank holidays e.g. royal weddings
  
  
