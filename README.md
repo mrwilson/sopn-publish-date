@@ -23,3 +23,28 @@ local_election_sopn = sopn_publish_date('local.cardiff.2019-02-21')
 ## Test
 
 `python -m pytest`
+
+## Todo
+
+Election types:
+
+ - [x] Local
+ - [x] Parliament
+ - [x] Scottish Parliament
+ - [ ] National Assembly for Wales
+ - [ ] Northern Irish Assembly
+ - [ ] Mayoral
+ - [ ] EU parliament
+ - [ ] Greater London Assembly
+ - [ ] Police and Crime commissioner
+ 
+Calendars:
+ - [x] England + Wales
+ - [x] Scotland
+ - [ ] Northern Ireland
+ - [ ] Isle of Man?
+ - [ ] Fixed-date bank holidays e.g. royal weddings
+ 
+ 
+ 
+ 
