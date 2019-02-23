@@ -19,3 +19,7 @@ local_election_sopn = sopn_publish_date('local.cardiff.2019-02-21')
 
 # datetime.datetime(2019, 1, 25)
 ```
+
+## Test
+
+`python -m pytest`
