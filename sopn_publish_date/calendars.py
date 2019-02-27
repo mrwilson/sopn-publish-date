@@ -54,7 +54,7 @@ class EnglandAndWalesHolidays(AbstractHolidayCalendar):
 class NorthernIrelandHolidays(AbstractHolidayCalendar):
     rules = [
         Holiday("New Years Day", month=1, day=1, observance=next_monday),
-        Holiday("St Patrick's Day", month=3, day=17, observance=next_monday),
+        Holiday("St Patrick's Day", month=3, day=18, observance=next_monday),
         GoodFriday,
         EasterMonday,
         Holiday(
@@ -64,7 +64,8 @@ class NorthernIrelandHolidays(AbstractHolidayCalendar):
             "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
         ),
         Holiday(
-            "Battle of the Boyne / Orangemen's Day", month=7, day=12, offset=next_monday),
+            "Battle of the Boyne / Orangemen's Day", month=7, day=12, observance=next_monday
+        ),
         Holiday(
             "Summer bank holiday", month=8, day=31, offset=DateOffset(weekday=MO(-1))
         ),
@@ -73,5 +74,5 @@ class NorthernIrelandHolidays(AbstractHolidayCalendar):
     ]
 
 
-def working_days(count, calendar=EnglandAndWalesHolidays()):
+def working_days(count, calendar):
     return CDay(count, calendar=calendar)

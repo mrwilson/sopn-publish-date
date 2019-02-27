@@ -15,7 +15,7 @@ def sopn_publish_date_for_id(election_id):
     elif election_type == 'naw':
         return sopn_publish_date('wales', date_of_poll)
     elif election_type == 'gla':
-        return date_of_poll - working_days(23)
+        return date_of_poll - working_days(23, EnglandAndWalesHolidays())
     else:
         raise Exception("Cannot derive country from ambiguous election id [%s]" % election_id)
 
@@ -23,10 +23,10 @@ def sopn_publish_date_for_id(election_id):
 def sopn_publish_date(country, poll_date):
 
     if country == 'northern-ireland':
-        return poll_date - working_days(19, calendar=NorthernIrelandHolidays())
+        return poll_date - working_days(16, NorthernIrelandHolidays())
     elif country == 'scotland':
-        return poll_date - working_days(23, calendar=ScottishHolidays())
+        return poll_date - working_days(23, ScottishHolidays())
     elif country == 'england' or country == 'wales':
-        return poll_date - working_days(19, calendar=EnglandAndWalesHolidays())
+        return poll_date - working_days(19, EnglandAndWalesHolidays())
     else:
         raise Exception("Not implemented for election: [%s,%d]" % (country, poll_date))
