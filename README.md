@@ -52,4 +52,9 @@ Calendars:
  * Association of Electoral Administrators [review of May 2016 elections](https://www.aea-elections.co.uk/wp-content/uploads/2016/09/aea-rep-2016-pushed-to-the-absolute-limit-the-electoral-year-never-to-forget-with-links.pdf) (Appendix D contains full timetabling for all concurrent elections)
  * TheyWorkForYou/Hansard: Lord Roberts of Llandudno on [overseas voting](https://www.theyworkforyou.com/lords/?id=2011-03-02a.1127.0)
  
+## Relevant Legislation
+
+ * [The Local Authorities (Mayoral Elections) (England and Wales) Regulations 2007](https://www.legislation.gov.uk/uksi/2007/1024/made) - timetables for mayoral elections (schedule 1, Timetable)
+ * [The Police and Crime Commissioner Elections Order 2012](https://www.legislation.gov.uk/uksi/2012/1917/made) - timetables for police and crime commissioner elections (schedule 1, Timetable)
+ 
  
