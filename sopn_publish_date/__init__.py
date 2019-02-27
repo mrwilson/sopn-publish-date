@@ -16,6 +16,8 @@ def sopn_publish_date_for_id(election_id):
         return sopn_publish_date('wales', date_of_poll)
     elif election_type == 'gla':
         return date_of_poll - working_days(23, EnglandAndWalesHolidays())
+    elif election_type == 'pcc':
+        return date_of_poll - working_days(18, EnglandAndWalesHolidays())
     else:
         raise Exception("Cannot derive country from ambiguous election id [%s]" % election_id)
 
