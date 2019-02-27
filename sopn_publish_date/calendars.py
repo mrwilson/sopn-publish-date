@@ -64,7 +64,10 @@ class NorthernIrelandHolidays(AbstractHolidayCalendar):
             "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
         ),
         Holiday(
-            "Battle of the Boyne / Orangemen's Day", month=7, day=12, observance=next_monday
+            "Battle of the Boyne / Orangemen's Day",
+            month=7,
+            day=12,
+            observance=next_monday,
         ),
         Holiday(
             "Summer bank holiday", month=8, day=31, offset=DateOffset(weekday=MO(-1))
