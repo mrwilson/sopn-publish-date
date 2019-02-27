@@ -35,7 +35,7 @@ Election types:
  - [x] Parliament
  - [x] Scottish Parliament
  - [x] National Assembly for Wales
- - [ ] Northern Irish Assembly
+ - [x] Northern Irish Assembly
  - [ ] Mayoral
  - [ ] EU parliament
  - [x] Greater London Assembly
@@ -46,7 +46,10 @@ Calendars:
  - [x] Scotland
  - [x] Northern Ireland
  - [ ] Fixed-date bank holidays e.g. royal weddings
- 
- 
+
+## Useful Links (delete pre-1.0)
+
+ * Association of Electoral Administrators [review of May 2016 elections](https://www.aea-elections.co.uk/wp-content/uploads/2016/09/aea-rep-2016-pushed-to-the-absolute-limit-the-electoral-year-never-to-forget-with-links.pdf) (Appendix D contains full timetabling for all concurrent elections)
+ * TheyWorkForYou/Hansard: Lord Roberts of Llandudno on [overseas voting](https://www.theyworkforyou.com/lords/?id=2011-03-02a.1127.0)
  
  
