@@ -10,7 +10,10 @@ Turns out this is a non-trivial question, depending on:
 
 ## Usage
 
-This library defines a single function `sopn_publish_date` which takes a string `election_id` in [uk-election-ids](https://elections.democracyclub.org.uk/reference_definition/) format and returns a `datetime` representing the day when the SoPN is published.
+This library defines a single function `sopn_publish_date` which takes a string `election_id` in [uk-election-ids](https://elections.democracyclub.org.uk/reference_definition/) format and:
+
+* Returns a `datetime` where the location of the election is unambiguous e.g. Scottish Parliamentary elections
+* Throws an exception where the location of the election is ambiguous e.g. `local`, `parl`
 
 ```python
 from sopn_publish_date import sopn_publish_date
@@ -31,17 +34,17 @@ Election types:
  - [x] Local
  - [x] Parliament
  - [x] Scottish Parliament
- - [ ] National Assembly for Wales
+ - [x] National Assembly for Wales
  - [ ] Northern Irish Assembly
  - [ ] Mayoral
  - [ ] EU parliament
- - [ ] Greater London Assembly
+ - [x] Greater London Assembly
  - [ ] Police and Crime commissioner
  
 Calendars:
  - [x] England + Wales
  - [x] Scotland
- - [ ] Northern Ireland
+ - [x] Northern Ireland
  - [ ] Fixed-date bank holidays e.g. royal weddings
  
  
