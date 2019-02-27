@@ -1,5 +1,7 @@
 # sopn-publish-date
 
+[![Build Status](https://travis-ci.org/mrwilson/sopn-publish-date.svg?branch=master)](https://travis-ci.org/mrwilson/sopn-publish-date)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 > Given the polling day of an election in the UK, when should the Statement of Persons Nominated (SoPN) should be published?
 
 Turns out this is a non-trivial question, depending on:
