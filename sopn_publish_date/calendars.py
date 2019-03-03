@@ -39,14 +39,15 @@ class CalendarFromJson(AbstractHolidayCalendar):
         for bank_holiday in dates:
             bank_holiday_date = datetime.strptime(bank_holiday["date"], "%Y-%m-%d")
             self.rules.append(
-                Holiday(
-                    bank_holiday["title"],
-                    year=bank_holiday_date.year,
-                    month=bank_holiday_date.month,
-                    day=bank_holiday_date.day,
+                CalendarFromJson.holiday_from_datetime(
+                    bank_holiday["title"], bank_holiday_date
                 )
             )
         AbstractHolidayCalendar.__init__(self)
+
+    @staticmethod
+    def holiday_from_datetime(name, date):
+        return Holiday(name, year=date.year, month=date.month, day=date.day)
 
 
 def working_days(count, calendar):
