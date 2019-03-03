@@ -1,80 +1,52 @@
+import json
+import os
+from datetime import datetime
+
+from pandas.tseries.holiday import AbstractHolidayCalendar, Holiday
 from pandas.tseries.offsets import CDay
 
-from pandas.tseries.holiday import (
-    AbstractHolidayCalendar,
-    DateOffset,
-    EasterMonday,
-    GoodFriday,
-    Holiday,
-    MO,
-    next_monday,
-    next_monday_or_tuesday,
-)
+
+class UnitedKingdomBankHolidays(object):
+    calendar = {}
+
+    def __init__(self):
+        bank_holiday_json = os.path.join(
+            os.path.dirname(__file__), "bank-holidays.json"
+        )
+
+        with open(bank_holiday_json, "r") as data:
+            json_calendar = json.loads(data.read())
+
+            for country in json_calendar.keys():
+                self.calendar[country] = CalendarFromJson(
+                    json_calendar[country]["events"]
+                )
+
+    def england_and_wales(self):
+        return self.calendar["england-and-wales"]
+
+    def scotland(self):
+        return self.calendar["scotland"]
+
+    def northern_ireland(self):
+        return self.calendar["northern-ireland"]
 
 
-class ScottishHolidays(AbstractHolidayCalendar):
-    rules = [
-        Holiday("New Years Day", month=1, day=1, observance=next_monday),
-        Holiday("2nd January", month=1, day=1, observance=next_monday),
-        GoodFriday,
-        Holiday(
-            "Early May bank holiday", month=5, day=1, offset=DateOffset(weekday=MO(1))
-        ),
-        Holiday(
-            "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
-        ),
-        Holiday(
-            "Summer bank holiday", month=8, day=1, offset=DateOffset(weekday=MO(1))
-        ),
-        Holiday("St Andrew's Day", month=11, day=30, observance=next_monday),
-        Holiday("Christmas Day", month=12, day=25, observance=next_monday),
-        Holiday("Boxing Day", month=12, day=26, observance=next_monday_or_tuesday),
-    ]
+class CalendarFromJson(AbstractHolidayCalendar):
+    rules = []
 
-
-class EnglandAndWalesHolidays(AbstractHolidayCalendar):
-    rules = [
-        Holiday("New Years Day", month=1, day=1, observance=next_monday),
-        GoodFriday,
-        EasterMonday,
-        Holiday(
-            "Early May bank holiday", month=5, day=1, offset=DateOffset(weekday=MO(1))
-        ),
-        Holiday(
-            "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
-        ),
-        Holiday(
-            "Summer bank holiday", month=8, day=31, offset=DateOffset(weekday=MO(-1))
-        ),
-        Holiday("Christmas Day", month=12, day=25, observance=next_monday),
-        Holiday("Boxing Day", month=12, day=26, observance=next_monday_or_tuesday),
-    ]
-
-
-class NorthernIrelandHolidays(AbstractHolidayCalendar):
-    rules = [
-        Holiday("New Years Day", month=1, day=1, observance=next_monday),
-        Holiday("St Patrick's Day", month=3, day=18, observance=next_monday),
-        GoodFriday,
-        EasterMonday,
-        Holiday(
-            "Early May bank holiday", month=5, day=1, offset=DateOffset(weekday=MO(1))
-        ),
-        Holiday(
-            "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
-        ),
-        Holiday(
-            "Battle of the Boyne / Orangemen's Day",
-            month=7,
-            day=12,
-            observance=next_monday,
-        ),
-        Holiday(
-            "Summer bank holiday", month=8, day=31, offset=DateOffset(weekday=MO(-1))
-        ),
-        Holiday("Christmas Day", month=12, day=25, observance=next_monday),
-        Holiday("Boxing Day", month=12, day=26, observance=next_monday_or_tuesday),
-    ]
+    def __init__(self, dates):
+        for bank_holiday in dates:
+            bank_holiday_date = datetime.strptime(bank_holiday["date"], "%Y-%m-%d")
+            self.rules.append(
+                Holiday(
+                    bank_holiday["title"],
+                    year=bank_holiday_date.year,
+                    month=bank_holiday_date.month,
+                    day=bank_holiday_date.day,
+                )
+            )
+        AbstractHolidayCalendar.__init__(self)
 
 
 def working_days(count, calendar):
