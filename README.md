@@ -12,17 +12,29 @@ Turns out this is a non-trivial question, depending on:
 
 ## Usage
 
-This library defines a single function `sopn_publish_date` which takes a string `election_id` in [uk-election-ids](https://elections.democracyclub.org.uk/reference_definition/) format and:
+This library defines a class `StatementPublishDate` with two functions:
 
-* Returns a `datetime` where the location of the election is unambiguous e.g. Scottish Parliamentary elections
-* Throws an exception where the location of the election is ambiguous e.g. `local`, `parl`
+* `for_id` takes a string `election_id` in [uk-election-ids](https://elections.democracyclub.org.uk/reference_definition/) format and:
+
+    * Returns a `datetime` where the location of the election is unambiguous e.g. Scottish Parliamentary elections
+    * Throws an exception where the location of the election is ambiguous e.g. `local`, `parl`
+* `for_country` takes a string `country` and a `datetime` and:
+    * Returns a `datetime` where the country is in the united kingdom
+    * Throws an exception where the country is unknown
+
+Examples:
 
 ```python
-from sopn_publish_date import sopn_publish_date
+from sopn_publish_date import StatementPublishDate
+from datetime import datetime
 
-local_election_sopn = sopn_publish_date('local.cardiff.2019-02-21')
+sopn_publish_date = StatementPublishDate()
 
-# datetime.datetime(2019, 1, 25)
+# Taking an id
+sopn_publish_date.for_id('nia.belfast-east.2017-03-02')
+
+# Taking a country and date
+sopn_publish_date.for_country('scotland', datetime(2019, 2, 23))
 ```
 
 ## Test
@@ -38,16 +50,16 @@ Election types:
  - [x] Scottish Parliament
  - [x] National Assembly for Wales
  - [x] Northern Irish Assembly
- - [ ] Mayoral
+ - [x] Mayoral
  - [ ] EU parliament
  - [x] Greater London Assembly
- - [ ] Police and Crime commissioner
+ - [x] Police and Crime commissioner
  
 Calendars:
  - [x] England + Wales
  - [x] Scotland
  - [x] Northern Ireland
- - [ ] Fixed-date bank holidays e.g. royal weddings
+ - [x] Fixed-date bank holidays e.g. royal weddings
 
 ## Useful Links (delete pre-1.0)
 
