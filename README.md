@@ -70,5 +70,6 @@ Calendars:
 
  * [The Local Authorities (Mayoral Elections) (England and Wales) Regulations 2007](https://www.legislation.gov.uk/uksi/2007/1024/made) - timetables for mayoral elections (schedule 1, Timetable)
  * [The Police and Crime Commissioner Elections Order 2012](https://www.legislation.gov.uk/uksi/2012/1917/made) - timetables for police and crime commissioner elections (schedule 1, Timetable)
+ * [Electoral Law Act (Northern Ireland) 1962](https://www.legislation.gov.uk/apni/1962/14/schedule/5/part/I) and [The Local Elections (Northern Ireland) Order 2010](https://www.legislation.gov.uk/uksi/2010/2977/schedule/1/part/4/made) - timetables for local elections in Northern Ireland
  
  
