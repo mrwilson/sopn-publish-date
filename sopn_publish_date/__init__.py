@@ -3,29 +3,48 @@ from sopn_publish_date.calendars import working_days, UnitedKingdomBankHolidays
 from datetime import datetime
 
 
+class InvalidElectionId(BaseException):
+    pass
+
+
+class AmbiguousElectionId(BaseException):
+    pass
+
+
 class StatementPublishDate(object):
     def __init__(self):
         self.calendar = UnitedKingdomBankHolidays()
 
+    @staticmethod
+    def _extract_from_id(election_id):
+        try:
+            election_type, *_, poll_date = election_id.split(".")
+
+            date_of_poll = datetime.strptime(poll_date, "%Y-%m-%d")
+
+            return election_type, date_of_poll
+        except Exception:
+            raise InvalidElectionId(
+                "Parameter [%s] is not in election id format" % election_id
+            )
+
     def for_id(self, election_id):
 
-        election_type, *_, poll_date = election_id.split(".")
-
-        date_of_poll = datetime.strptime(poll_date, "%Y-%m-%d")
+        election_type, poll_date = StatementPublishDate._extract_from_id(election_id)
 
         if election_type == "nia":
-            return self.for_country("northern-ireland", date_of_poll)
+            return self.for_country("northern-ireland", poll_date)
         elif election_type == "sp":
-            return self.for_country("scotland", date_of_poll)
+            return self.for_country("scotland", poll_date)
         elif election_type == "naw":
-            return self.for_country("wales", date_of_poll)
+            return self.for_country("wales", poll_date)
         elif election_type == "gla":
-            return date_of_poll - working_days(23, self.calendar.england_and_wales())
+            return poll_date - working_days(23, self.calendar.england_and_wales())
         elif election_type == "pcc":
-            return date_of_poll - working_days(18, self.calendar.england_and_wales())
+            return poll_date - working_days(18, self.calendar.england_and_wales())
         else:
-            raise Exception(
-                "Cannot derive country from ambiguous election id [%s]" % election_id
+            raise AmbiguousElectionId(
+                "Cannot derive country from election id [%s]" % election_id
             )
 
     def for_country(self, country, poll_date):
