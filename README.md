@@ -4,15 +4,19 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 > Given the polling day of an election in the UK, when should the Statement of Persons Nominated (SoPN) should be published?
 
-Turns out this is a non-trivial question, depending on:
+This is a non-trivial question, depending on:
 
 - type of election
 - country
 - calendars and bank holidays
 
+Even then, it's fuzzy - if a candidate objects to their nomination, that can delay SoPN publication up to the next day.
+
+This project answers when a SoPN _should_ be published, but that is not a guarantee that it _will_ be.
+
 ## Usage
 
-This library defines a class `StatementPublishDate` with two functions:
+`sopn_publish_date` defines a class `StatementPublishDate` with two functions:
 
 * `for_id` takes a string `election_id` in [uk-election-ids](https://elections.democracyclub.org.uk/reference_definition/) format and:
 
@@ -39,7 +43,7 @@ sopn_publish_date.for_country('scotland', datetime(2019, 2, 23))
 
 ## Test
 
-`python -m pytest`
+`python -m pytest -v`
 
 ## Todo
 
@@ -71,5 +75,6 @@ Calendars:
  * [The Local Authorities (Mayoral Elections) (England and Wales) Regulations 2007](https://www.legislation.gov.uk/uksi/2007/1024/made) - timetables for mayoral elections (schedule 1, Timetable)
  * [The Police and Crime Commissioner Elections Order 2012](https://www.legislation.gov.uk/uksi/2012/1917/made) - timetables for police and crime commissioner elections (schedule 1, Timetable)
  * [Electoral Law Act (Northern Ireland) 1962](https://www.legislation.gov.uk/apni/1962/14/schedule/5/part/I) and [The Local Elections (Northern Ireland) Order 2010](https://www.legislation.gov.uk/uksi/2010/2977/schedule/1/part/4/made) - timetables for local elections in Northern Ireland
+ * [The Greater London Authority Elections Rules 2007](http://www.legislation.gov.uk/uksi/2007/3541/contents/made) - timetables for London Assembly and Mayor of London.
  
  
