@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-with open("README.md", "r") as fh:
+with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setup(
@@ -9,7 +9,7 @@ setup(
     version='0.1.0',
     description='Derive publish dates of Statements of Persons Nominated for UK elections',
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
     author='Alex Wilson',
     author_email='alex+github@probablyfine.co.uk',
     license='MIT',
