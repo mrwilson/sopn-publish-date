@@ -45,6 +45,10 @@ sopn_publish_date.for_country('scotland', datetime(2019, 2, 23))
 
 `python -m pytest -v`
 
+## Sources
+
+The [bank holidays JSON](./sopn_publish_date/bank-holidays.json) is provided by [gov.uk](https://www.gov.uk/bank-holidays.json) under the [Open Government Licence](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
+
 ## Todo
 
 Election types:
