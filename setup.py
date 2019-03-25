@@ -14,7 +14,6 @@ setup(
     author_email="alex+github@probablyfine.co.uk",
     license="MIT",
     packages=find_packages(),
-    include_package_data=True,
     install_requires=("pandas"),
     classifiers=[
         "License :: OSI Approved :: MIT License",
