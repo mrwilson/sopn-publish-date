@@ -38,10 +38,12 @@ class StatementPublishDate(object):
             return self.for_country("scotland", poll_date)
         elif election_type == "naw":
             return self.for_country("wales", poll_date)
-        elif election_type == "gla":
+        elif election_type == "gla" or "mayor.london" in election_id:
             return poll_date - working_days(23, self.calendar.england_and_wales())
         elif election_type == "pcc":
             return poll_date - working_days(18, self.calendar.england_and_wales())
+        elif election_type == "mayor":
+            return poll_date - working_days(19, self.calendar.england_and_wales())
         else:
             raise AmbiguousElectionId(
                 "Cannot derive country from election id [%s]" % election_id

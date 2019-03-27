@@ -59,6 +59,7 @@ Election types:
  - [x] National Assembly for Wales
  - [x] Northern Irish Assembly
  - [x] Mayoral
+ - [x] Mayoral (London)
  - [ ] EU parliament
  - [x] Greater London Assembly
  - [x] Police and Crime commissioner
