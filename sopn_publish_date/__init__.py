@@ -35,7 +35,7 @@ class StatementPublishDate(object):
         if election_type == "nia":
             return self.northern_irish_assembly(poll_date)
         elif election_type == "sp":
-            return self.for_country("scotland", poll_date)
+            return self.scottish_parliament(poll_date)
         elif election_type == "naw":
             return self.for_country("wales", poll_date)
         elif election_type == "gla" or "mayor.london" in election_id:
@@ -51,6 +51,9 @@ class StatementPublishDate(object):
 
     def northern_irish_assembly(self, poll_date):
         return poll_date - working_days(16, self.calendar.northern_ireland())
+
+    def scottish_parliament(self, poll_date):
+        return poll_date - working_days(23, self.calendar.scotland())
 
     def for_country(self, country, poll_date):
 
