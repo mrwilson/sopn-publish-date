@@ -77,9 +77,34 @@ Calendars:
  
 ## Relevant Legislation
 
- * [The Local Authorities (Mayoral Elections) (England and Wales) Regulations 2007](https://www.legislation.gov.uk/uksi/2007/1024/made) - timetables for mayoral elections (schedule 1, Timetable)
- * [The Police and Crime Commissioner Elections Order 2012](https://www.legislation.gov.uk/uksi/2012/1917/made) - timetables for police and crime commissioner elections (schedule 1, Timetable)
- * [Electoral Law Act (Northern Ireland) 1962](https://www.legislation.gov.uk/apni/1962/14/schedule/5/part/I) and [The Local Elections (Northern Ireland) Order 2010](https://www.legislation.gov.uk/uksi/2010/2977/schedule/1/part/4/made) - timetables for local elections in Northern Ireland
- * [The Greater London Authority Elections Rules 2007](http://www.legislation.gov.uk/uksi/2007/3541/contents/made) - timetables for London Assembly and Mayor of London.
+ * **UK Parliament** - https://www.legislation.gov.uk/ukpga/1983/2/contents (Schedule 1, rules 1 & 2), two amendments outstanding: https://www.legislation.gov.uk/ukpga/2011/14 and https://www.legislation.gov.uk/ukpga/2013/6/section/14
+ 
+ * **Northern Ireland Assembly** - https://www.legislation.gov.uk/uksi/2009/256/made (Schedule 1)
+ 
+ * **Scottish Parliament** - https://www.legislation.gov.uk/ssi/2015/425/made (Schedule 2, rules 1 & 2)
+ 
+ * **Welsh Assembly/Senedd** - https://www.legislation.gov.uk/uksi/2007/236/made (Schedule 5, rules 1 & 2), amended by https://www.legislation.gov.uk/uksi/2016/272/article/18/made
+ 
+ * **Greater London Authority** - https://www.legislation.gov.uk/uksi/2007/3541/made (Rule 7 and Schedules 1/2/3/5/6/7, rules 3 & 4), amended by https://www.legislation.gov.uk/uksi/2016/24/article/6/made
+ 
+ * **Police & Crime Commissioner** - https://www.legislation.gov.uk/uksi/2012/1917/made (Schedule 3, rules 1 & 3), amended by https://www.legislation.gov.uk/uksi/2014/921/article/31/made
+ and https://www.legislation.gov.uk/uksi/2016/300/article/11/made
+ 
+ * **Combined Authority Mayors** - https://www.legislation.gov.uk/uksi/2017/67/made (Schedules 1/3, rules 3 & 4)
+ 
+ * **Local (Principal Areas), England & Wales** - https://www.legislation.gov.uk/uksi/2006/3304/made (Schedules 2/3, rules 1 & 2), amended by https://www.legislation.gov.uk/uksi/2014/494/made (Rules 3(2) and 4(2))
+ 
+ * **Local Mayors, England & Wales** - https://www.legislation.gov.uk/uksi/2007/1024/made (Schedules 1/3, rules 3 & 4), amended by https://www.legislation.gov.uk/uksi/2014/370/made (Regulations 5(2) and 7(2))
+ 
+ * **Parishes & Communities, England & Wales** - https://www.legislation.gov.uk/uksi/2006/3305/made (Schedules 2/3, rules 1 & 2), amended by https://www.legislation.gov.uk/uksi/2014/492/made (Rules 3(2) and 4(2))
+ 
+ * **Local, Northern Ireland** - https://www.legislation.gov.uk/apni/1962/14 (Schedule 5, rules 1 & 2), amended by https://www.legislation.gov.uk/uksi/2010/2977/schedule/1/part/4/made
+ 
+ * **Local, Scotland** - https://www.legislation.gov.uk/ssi/2011/399/made (Schedule 1, rules 1 & 2)
+ 
+ * **City of London** - Section 10(1) of the Act of Common Council of 14 July 1960 (as substituted by section 6 of the Act of Common Council of 6 November 2008)
+ (source: https://www.cityoflondon.gov.uk/about-the-city/voting-elections/Documents/wardmote-book-june-2014.pdf (Section 4, paragraph 20))
+ 
+ * **European Parliament** - https://www.legislation.gov.uk/uksi/2009/186/made (Schedule 2, rules 1 & 2)
  
  
