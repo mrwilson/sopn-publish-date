@@ -39,7 +39,7 @@ class StatementPublishDate(object):
         elif election_type == "naw":
             return self.national_assembly_for_wales(poll_date)
         elif election_type == "gla" or "mayor.london" in election_id:
-            return poll_date - working_days(23, self.calendar.england_and_wales())
+            return self.greater_london_assembly(poll_date)
         elif election_type == "pcc":
             return poll_date - working_days(18, self.calendar.england_and_wales())
         elif election_type == "mayor":
@@ -57,6 +57,9 @@ class StatementPublishDate(object):
 
     def national_assembly_for_wales(self, poll_date):
         return poll_date - working_days(19, self.calendar.england_and_wales())
+
+    def greater_london_assembly(self, poll_date):
+        return poll_date - working_days(23, self.calendar.england_and_wales())
 
     def for_country(self, country, poll_date):
 
