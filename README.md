@@ -57,7 +57,7 @@ Election types:
  - [x] Parliament
  - [x] Scottish Parliament
  - [x] National Assembly for Wales
- - [x] Northern Irish Assembly
+ - [x] Northern Ireland Assembly
  - [x] Mayoral
  - [x] Mayoral (London)
  - [ ] EU parliament

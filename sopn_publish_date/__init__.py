@@ -33,7 +33,7 @@ class StatementPublishDate(object):
         election_type, poll_date = StatementPublishDate._extract_from_id(election_id)
 
         if election_type == "nia":
-            return self.northern_irish_assembly(poll_date)
+            return self.northern_ireland_assembly(poll_date)
         elif election_type == "sp":
             return self.scottish_parliament(poll_date)
         elif election_type == "naw":
@@ -49,7 +49,7 @@ class StatementPublishDate(object):
                 "Cannot derive country from election id [%s]" % election_id
             )
 
-    def northern_irish_assembly(self, poll_date):
+    def northern_ireland_assembly(self, poll_date):
         return poll_date - working_days(16, self.calendar.northern_ireland())
 
     def scottish_parliament(self, poll_date):
