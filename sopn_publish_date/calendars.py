@@ -52,3 +52,7 @@ class CalendarFromJson(AbstractHolidayCalendar):
 
 def working_days(count, calendar):
     return CDay(count, calendar=calendar)
+
+
+def as_date(timestamp):
+    return timestamp.to_pydatetime().date()

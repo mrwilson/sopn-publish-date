@@ -1,6 +1,6 @@
-from sopn_publish_date.calendars import working_days, UnitedKingdomBankHolidays
+from sopn_publish_date.calendars import working_days, UnitedKingdomBankHolidays, as_date
 
-from datetime import datetime
+from datetime import datetime, date
 
 
 class InvalidElectionId(BaseException):
@@ -20,7 +20,7 @@ class StatementPublishDate(object):
         try:
             election_type, *_, poll_date = election_id.split(".")
 
-            date_of_poll = datetime.strptime(poll_date, "%Y-%m-%d")
+            date_of_poll = datetime.strptime(poll_date, "%Y-%m-%d").date()
 
             return election_type, date_of_poll
         except Exception:
@@ -41,38 +41,38 @@ class StatementPublishDate(object):
         elif election_type == "gla" or "mayor.london" in election_id:
             return self.greater_london_assembly(poll_date)
         elif election_type == "pcc":
-            return poll_date - working_days(18, self.calendar.england_and_wales())
+            return as_date(poll_date - working_days(18, self.calendar.england_and_wales()))
         elif election_type == "mayor":
-            return poll_date - working_days(19, self.calendar.england_and_wales())
+            return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
         else:
             raise AmbiguousElectionId(
                 "Cannot derive country from election id [%s]" % election_id
             )
 
-    def northern_ireland_assembly(self, poll_date):
-        return poll_date - working_days(16, self.calendar.northern_ireland())
+    def northern_ireland_assembly(self, poll_date: date) -> date:
+        return as_date(poll_date - working_days(16, self.calendar.northern_ireland()))
 
-    def scottish_parliament(self, poll_date):
-        return poll_date - working_days(23, self.calendar.scotland())
+    def scottish_parliament(self, poll_date: date) -> date:
+        return as_date(poll_date - working_days(23, self.calendar.scotland()))
 
-    def national_assembly_for_wales(self, poll_date):
-        return poll_date - working_days(19, self.calendar.england_and_wales())
+    def national_assembly_for_wales(self, poll_date: date) -> date:
+        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
 
-    def greater_london_assembly(self, poll_date):
-        return poll_date - working_days(23, self.calendar.england_and_wales())
+    def greater_london_assembly(self, poll_date: date) -> date:
+        return as_date(poll_date - working_days(23, self.calendar.england_and_wales()))
 
-    def police_and_crime_commissioner(self, poll_date):
-        return poll_date - working_days(18, self.calendar.northern_ireland())
+    def police_and_crime_commissioner(self, poll_date: date) -> date:
+        return as_date(poll_date - working_days(18, self.calendar.northern_ireland()))
 
-    def for_country(self, country, poll_date):
+    def for_country(self, country, poll_date: date) -> date:
 
         if country == "northern-ireland":
-            return poll_date - working_days(16, self.calendar.northern_ireland())
+            return as_date(poll_date - working_days(16, self.calendar.northern_ireland()))
         elif country == "scotland":
-            return poll_date - working_days(23, self.calendar.scotland())
+            return as_date(poll_date - working_days(23, self.calendar.scotland()))
         elif country == "england" or country == "wales":
-            return poll_date - working_days(19, self.calendar.england_and_wales())
+            return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
         else:
             raise Exception(
-                "Not implemented for election: [%s,%d]" % (country, poll_date)
+                "Not implemented for election: [%s,%s]" % (country, poll_date)
             )
