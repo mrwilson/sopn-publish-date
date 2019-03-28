@@ -61,6 +61,9 @@ class StatementPublishDate(object):
     def greater_london_assembly(self, poll_date):
         return poll_date - working_days(23, self.calendar.england_and_wales())
 
+    def police_and_crime_commissioner(self, poll_date):
+        return poll_date - working_days(18, self.calendar.northern_ireland())
+
     def for_country(self, country, poll_date):
 
         if country == "northern-ireland":
