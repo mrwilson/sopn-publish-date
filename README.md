@@ -13,34 +13,16 @@ This is a non-trivial question, depending on:
 Even then, it's fuzzy - if a candidate objects to their nomination, that can delay SoPN publication up to the next day.
 
 This project answers when a SoPN _should_ be published, but that is not a guarantee that it _will_ be.
-
-## Usage
-
-`sopn_publish_date` defines a class `StatementPublishDate` with two functions:
-
-* `for_id` takes a string `election_id` in [uk-election-ids](https://elections.democracyclub.org.uk/reference_definition/) format and:
-
-    * Returns a `datetime` where the location of the election is unambiguous e.g. Scottish Parliamentary elections
-    * Throws an exception where the location of the election is ambiguous e.g. `local`, `parl`
-* `for_country` takes a string `country` and a `datetime` and:
-    * Returns a `datetime` where the country is in the united kingdom
-    * Throws an exception where the country is unknown
-
-Examples:
-
 ```python
-from sopn_publish_date import StatementPublishDate
-from datetime import datetime
+>>> from sopn_publish_date import StatementPublishDate
+>>> from datetime import date
 
-sopn_publish_date = StatementPublishDate()
+>>> sopn_publish_date = StatementPublishDate()
+>>> publish_date = sopn_publish_date.national_assembly_for_wales(date(2016, 5, 5))
 
-# Taking an id
-sopn_publish_date.for_id('nia.belfast-east.2017-03-02')
+# date(2016, 4, 7)
 
-# Taking a country and date
-sopn_publish_date.for_country('scotland', datetime(2019, 2, 23))
 ```
-
 ## Test
 
 `python -m pytest -v`
