@@ -50,12 +50,36 @@ class StatementPublishDate(object):
             )
 
     def northern_ireland_assembly(self, poll_date: date) -> date:
+        """
+        Calculate the publish date for an election to the Northern Ireland Assembly
+
+        This is set out by Schedule 5, Rules 1 and 2 of `The Northern Ireland Assembly (Elections) (Amendment) Order 2009 <https://www.legislation.gov.uk/uksi/2009/256/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :return: a datetime representing the expected publish date
+        """
         return as_date(poll_date - working_days(16, self.calendar.northern_ireland()))
 
     def scottish_parliament(self, poll_date: date) -> date:
+        """
+        Calculate the publish date for an election to the Scottish Parliament
+
+        This is set out in `The Scottish Parliament (Elections etc.) Order 2015 <https://www.legislation.gov.uk/ssi/2015/425/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :return: a datetime representing the expected publish date
+        """
         return as_date(poll_date - working_days(23, self.calendar.scotland()))
 
     def national_assembly_for_wales(self, poll_date: date) -> date:
+        """
+        Calculate the publish date for an election to the National Assembly for Wales
+
+        This is set out in `The National Assembly for Wales (Representation of the People) (Amendment) Order 2016 <https://www.legislation.gov.uk/uksi/2016/272/article/18/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :return: a datetime representing the expected publish date
+        """
         return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
 
     def greater_london_assembly(self, poll_date: date) -> date:
