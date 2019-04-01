@@ -1,2 +1,3 @@
 pandas
 pytest
+sphinx_markdown_tables
