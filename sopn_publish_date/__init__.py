@@ -1,4 +1,4 @@
-from sopn_publish_date.calendars import working_days, UnitedKingdomBankHolidays, as_date
+from sopn_publish_date.calendars import working_days, UnitedKingdomBankHolidays, as_date, Country
 
 from datetime import datetime, date
 
@@ -115,15 +115,28 @@ class StatementPublishDate(object):
         """
         return as_date(poll_date - working_days(18, self.calendar.england_and_wales()))
 
-    def for_country(self, country, poll_date: date) -> date:
+    def local(self, poll_date: date, country: Country):
+        """
+        Calculate the publish date for a local election.
 
-        if country == "northern-ireland":
-            return as_date(poll_date - working_days(16, self.calendar.northern_ireland()))
-        elif country == "scotland":
-            return as_date(poll_date - working_days(23, self.calendar.scotland()))
-        elif country == "england" or country == "wales":
-            return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
-        else:
-            raise Exception(
-                "Not implemented for election: [%s,%s]" % (country, poll_date)
-            )
+        This is set out in:
+
+         * `The Local Elections (Principal Areas) (England and Wales) (Amendment) Rules 2014 <https://www.legislation.gov.uk/uksi/2014/494/made>`_
+         * `The Local Elections (Northern Ireland) Order 2010 <https://www.legislation.gov.uk/uksi/2010/2977/schedule/1/part/4/made>`_
+         * `The Scottish Local Government Elections Order 2011 <https://www.legislation.gov.uk/ssi/2011/399/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :param country: the country in which the election is being run
+        :return: a datetime representing the expected publish date
+        """
+
+        country_specific_duration = {
+            Country.ENGLAND: 19,
+            Country.NORTHERN_IRELAND: 16,
+            Country.SCOTLAND: 23,
+            Country.WALES: 19,
+        }
+
+        days_prior = country_specific_duration[country]
+
+        return as_date(poll_date - working_days(days_prior, self.calendar.from_country(country)))

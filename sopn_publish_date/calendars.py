@@ -4,6 +4,14 @@ from datetime import datetime
 
 from pandas.tseries.holiday import AbstractHolidayCalendar, Holiday
 from pandas.tseries.offsets import CDay
+from enum import Enum
+
+
+class Country(Enum):
+    ENGLAND = 1
+    NORTHERN_IRELAND = 2
+    SCOTLAND = 3
+    WALES = 4
 
 
 class UnitedKingdomBankHolidays(object):
@@ -30,6 +38,14 @@ class UnitedKingdomBankHolidays(object):
 
     def northern_ireland(self):
         return self.calendar["northern-ireland"]
+
+    def from_country(self, country: Country):
+        if country == Country.ENGLAND or country == Country.WALES:
+            return self.england_and_wales()
+        elif country == Country.NORTHERN_IRELAND:
+            return self.northern_ireland()
+        else:
+            return self.scotland()
 
 
 class CalendarFromJson(AbstractHolidayCalendar):
