@@ -41,7 +41,7 @@ class StatementPublishDate(object):
         elif election_type == "gla" or "mayor.london" in election_id:
             return self.greater_london_assembly(poll_date)
         elif election_type == "pcc":
-            return as_date(poll_date - working_days(18, self.calendar.england_and_wales()))
+            return self.police_and_crime_commissioner(poll_date)
         elif election_type == "mayor":
             return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
         else:
