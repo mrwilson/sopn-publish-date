@@ -83,6 +83,14 @@ class StatementPublishDate(object):
         return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
 
     def greater_london_assembly(self, poll_date: date) -> date:
+        """
+        Calculate the publish date for an election to the Greater London Assembly
+
+        This is set out in `The Greater London Authority Elections (Amendment) Rules 2016 <https://www.legislation.gov.uk/uksi/2016/24/article/6/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :return: a datetime representing the expected publish date
+        """
         return as_date(poll_date - working_days(23, self.calendar.england_and_wales()))
 
     def police_and_crime_commissioner(self, poll_date: date) -> date:
