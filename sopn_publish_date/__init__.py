@@ -93,6 +93,17 @@ class StatementPublishDate(object):
         """
         return as_date(poll_date - working_days(23, self.calendar.england_and_wales()))
 
+    def european_parliament(self, poll_date: date) -> date:
+        """
+        Calculate the publish date for an election to the European Parliament
+
+        This is set out in `The European Parliamentary Elections (Amendment) Regulations 2009 <https://www.legislation.gov.uk/uksi/2009/186/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :return: a datetime representing the expected publish date
+        """
+        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
+
     def police_and_crime_commissioner(self, poll_date: date) -> date:
         return as_date(poll_date - working_days(18, self.calendar.northern_ireland()))
 
