@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mrwilson/sopn-publish-date.svg?branch=master)](https://travis-ci.org/mrwilson/sopn-publish-date)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![Documentation Status](https://readthedocs.org/projects/sopn-publish-date/badge/?version=latest)](https://sopn-publish-date.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/sopn-publish-date/badge/?version=latest)](https://sopn-publish-date.readthedocs.io/en/latest/overview.html?badge=latest)
 > Given the polling day of an election in the UK, when should the Statement of Persons Nominated (SoPN) should be published?
 
 ## Test
