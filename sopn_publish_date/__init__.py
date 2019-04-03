@@ -4,55 +4,36 @@ from sopn_publish_date.calendars import (
     as_date,
     Country,
 )
+from sopn_publish_date.election_ids import type_and_poll_date, AmbiguousElectionId
 
-from datetime import datetime, date
-
-
-class InvalidElectionId(BaseException):
-    pass
-
-
-class AmbiguousElectionId(BaseException):
-    pass
+from datetime import date
 
 
 class StatementPublishDate(object):
     def __init__(self):
+        self.election_id_lookup = {
+            "nia": self.northern_ireland_assembly,
+            "sp": self.scottish_parliament,
+            "naw": self.national_assembly_for_wales,
+            "gla": self.greater_london_assembly,
+            "pcc": self.police_and_crime_commissioner,
+            "mayor": self.mayor,
+        }
         self.calendar = UnitedKingdomBankHolidays()
 
-    @staticmethod
-    def _extract_from_id(election_id):
-        try:
-            election_type, *_, poll_date = election_id.split(".")
+    def for_id(self, election_id: str) -> date:
+        """
+        Calculate the publish date for an election given in `uk-election-ids <https://elections.democracyclub.org.uk/reference_definition/>`_ format, or raise an exception if that election id is ambiguous (could correspond to elections in multiple countries with different electoral legislation)
 
-            date_of_poll = datetime.strptime(poll_date, "%Y-%m-%d").date()
+        :param election_id: a string representing an election id in uk-election-ids format
+        :return: a datetime representing the expected publish date
+        """
+        election_type, poll_date = type_and_poll_date(election_id)
 
-            return election_type, date_of_poll
-        except Exception:
-            raise InvalidElectionId(
-                "Parameter [%s] is not in election id format" % election_id
-            )
-
-    def for_id(self, election_id):
-
-        election_type, poll_date = StatementPublishDate._extract_from_id(election_id)
-
-        if election_type == "nia":
-            return self.northern_ireland_assembly(poll_date)
-        elif election_type == "sp":
-            return self.scottish_parliament(poll_date)
-        elif election_type == "naw":
-            return self.national_assembly_for_wales(poll_date)
-        elif election_type == "gla" or "mayor.london" in election_id:
-            return self.greater_london_assembly(poll_date)
-        elif election_type == "pcc":
-            return self.police_and_crime_commissioner(poll_date)
-        elif election_type == "mayor":
-            return self.mayor(poll_date)
+        if election_id in self.election_id_lookup:
+            return self.election_id_lookup[election_id](poll_date)
         else:
-            raise AmbiguousElectionId(
-                "Cannot derive country from election id [%s]" % election_id
-            )
+            raise AmbiguousElectionId(election_id)
 
     def northern_ireland_assembly(self, poll_date: date) -> date:
         """
