@@ -1,4 +1,9 @@
-from sopn_publish_date.calendars import working_days, UnitedKingdomBankHolidays, as_date, Country
+from sopn_publish_date.calendars import (
+    working_days,
+    UnitedKingdomBankHolidays,
+    as_date,
+    Country,
+)
 
 from datetime import datetime, date
 
@@ -43,7 +48,9 @@ class StatementPublishDate(object):
         elif election_type == "pcc":
             return self.police_and_crime_commissioner(poll_date)
         elif election_type == "mayor":
-            return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
+            return as_date(
+                poll_date - working_days(19, self.calendar.england_and_wales())
+            )
         else:
             raise AmbiguousElectionId(
                 "Cannot derive country from election id [%s]" % election_id
@@ -139,4 +146,6 @@ class StatementPublishDate(object):
 
         days_prior = country_specific_duration[country]
 
-        return as_date(poll_date - working_days(days_prior, self.calendar.from_country(country)))
+        return as_date(
+            poll_date - working_days(days_prior, self.calendar.from_country(country))
+        )
