@@ -2,27 +2,9 @@
 
 [![Build Status](https://travis-ci.org/mrwilson/sopn-publish-date.svg?branch=master)](https://travis-ci.org/mrwilson/sopn-publish-date)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+![Documentation Status](https://readthedocs.org/projects/sopn-publish-date/badge/?version=latest)](https://sopn-publish-date.readthedocs.io/en/latest/?badge=latest)
 > Given the polling day of an election in the UK, when should the Statement of Persons Nominated (SoPN) should be published?
 
-This is a non-trivial question, depending on:
-
-- type of election
-- country
-- calendars and bank holidays
-
-Even then, it's fuzzy - if a candidate objects to their nomination, that can delay SoPN publication up to the next day.
-
-This project answers when a SoPN _should_ be published, but that is not a guarantee that it _will_ be.
-```python
->>> from sopn_publish_date import StatementPublishDate
->>> from datetime import date
-
->>> sopn_publish_date = StatementPublishDate()
->>> publish_date = sopn_publish_date.national_assembly_for_wales(date(2016, 5, 5))
-
-# date(2016, 4, 7)
-
-```
 ## Test
 
 `python -m pytest -v`
