@@ -18,6 +18,7 @@ class StatementPublishDate(object):
             "gla": self.greater_london_assembly,
             "pcc": self.police_and_crime_commissioner,
             "mayor": self.mayor,
+            "parl": self.uk_parliament
         }
         self.calendar = UnitedKingdomBankHolidays()
 
@@ -106,6 +107,17 @@ class StatementPublishDate(object):
         Calculate the publish date for an election to the position of Mayor in England and Wales
 
         This is set out in `The Local Authorities (Mayoral Elections) (England and Wales) (Amendment) Regulations 2014 <https://www.legislation.gov.uk/uksi/2014/370/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :return: a datetime representing the expected publish date
+        """
+        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
+
+    def uk_parliament(self, poll_date: date):
+        """
+        Calculate the publish date for an election to the Parliament of the United Kingdom
+
+        This is set out in `Electoral Registration and Administration Act 2013 <https://www.legislation.gov.uk/ukpga/2013/6/section/14>`_
 
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
