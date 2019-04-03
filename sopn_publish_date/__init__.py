@@ -113,16 +113,17 @@ class StatementPublishDate(object):
         """
         return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
 
-    def uk_parliament(self, poll_date: date):
+    def uk_parliament(self, poll_date: date, country: Country = Country.ENGLAND):
         """
         Calculate the publish date for an election to the Parliament of the United Kingdom
 
         This is set out in `Electoral Registration and Administration Act 2013 <https://www.legislation.gov.uk/ukpga/2013/6/section/14>`_
 
         :param poll_date: a datetime representing the date of the poll
+        :param country: the country in which the election is being run
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
+        return as_date(poll_date - working_days(19, self.calendar.from_country(country)))
 
     def local(self, poll_date: date, country: Country):
         """
