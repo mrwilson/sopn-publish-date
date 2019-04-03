@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 from pandas.tseries.holiday import AbstractHolidayCalendar, Holiday
-from pandas.tseries.offsets import CDay
+from pandas.tseries.offsets import CDay as BusinessDays
 from enum import Enum
 
 
@@ -81,8 +81,15 @@ class UnitedKingdomBankHolidays(object):
             return self.scotland()
 
 
-def working_days(count: int, calendar: CalendarFromJson):
-    return CDay(count, calendar=calendar)
+def working_days(count: int, calendar: CalendarFromJson) -> BusinessDays:
+    """
+    A pandas representation of a period with the given number of working days using a specified calendar.
+
+    :param count: number of working days
+    :param calendar: calendar representing bank holidays in a specific country
+    :return: a number of days to be used in date arithmetic that honours weekends and bank holidays
+    """
+    return BusinessDays(count, calendar=calendar)
 
 
 def as_date(timestamp):
