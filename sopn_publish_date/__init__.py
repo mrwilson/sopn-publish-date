@@ -48,9 +48,7 @@ class StatementPublishDate(object):
         elif election_type == "pcc":
             return self.police_and_crime_commissioner(poll_date)
         elif election_type == "mayor":
-            return as_date(
-                poll_date - working_days(19, self.calendar.england_and_wales())
-            )
+            return self.mayor(poll_date)
         else:
             raise AmbiguousElectionId(
                 "Cannot derive country from election id [%s]" % election_id
@@ -121,6 +119,17 @@ class StatementPublishDate(object):
         :return: a datetime representing the expected publish date
         """
         return as_date(poll_date - working_days(18, self.calendar.england_and_wales()))
+
+    def mayor(self, poll_date: date) -> date:
+        """
+        Calculate the publish date for an election to the position of Mayor in England and Wales
+
+        This is set out in `The Local Authorities (Mayoral Elections) (England and Wales) (Amendment) Regulations 2014 <https://www.legislation.gov.uk/uksi/2014/370/made>`_
+
+        :param poll_date: a datetime representing the date of the poll
+        :return: a datetime representing the expected publish date
+        """
+        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
 
     def local(self, poll_date: date, country: Country):
         """
