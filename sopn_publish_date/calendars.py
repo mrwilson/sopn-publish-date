@@ -11,6 +11,7 @@ class Country(Enum):
     """
     The countries of the United Kingdom.
     """
+
     ENGLAND = 1
     NORTHERN_IRELAND = 2
     SCOTLAND = 3
@@ -21,13 +22,12 @@ class BankHolidayCalendar(AbstractHolidayCalendar):
     """
     A calendar that honours the standard 5-day week in addition to the input list of dates.
     """
+
     def __init__(self, dates):
         for bank_holiday in dates:
             bank_holiday_date = datetime.strptime(bank_holiday["date"], "%Y-%m-%d")
             self.rules.append(
-                BankHolidayCalendar.holiday_from_datetime(
-                    bank_holiday["title"], bank_holiday_date
-                )
+                holiday_from_datetime(bank_holiday["title"], bank_holiday_date)
             )
         AbstractHolidayCalendar.__init__(self)
 
@@ -38,6 +38,7 @@ class UnitedKingdomBankHolidays(object):
 
     This class exposes a function for each unique calendar: England & Wales, Northern Ireland, and Scotland.
     """
+
     _calendar = {}
 
     def __init__(self):
@@ -115,4 +116,9 @@ def holiday_from_datetime(name: str, original_datetime: datetime) -> Holiday:
     :param original_datetime: a representation of the holiday as a datetime
     :return: the pandas.tseries.holiday.Holiday representation of the datetime
     """
-    return Holiday(name, year=original_datetime.year, month=original_datetime.month, day=original_datetime.day)
+    return Holiday(
+        name,
+        year=original_datetime.year,
+        month=original_datetime.month,
+        day=original_datetime.day,
+    )
