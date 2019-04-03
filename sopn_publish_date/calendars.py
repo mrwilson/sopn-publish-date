@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, date
 
 from pandas.tseries.holiday import AbstractHolidayCalendar, Holiday
 from pandas.tseries.offsets import CDay as BusinessDays
@@ -8,31 +8,36 @@ from enum import Enum
 
 
 class Country(Enum):
+    """
+    The countries of the United Kingdom.
+    """
     ENGLAND = 1
     NORTHERN_IRELAND = 2
     SCOTLAND = 3
     WALES = 4
 
 
-class CalendarFromJson(AbstractHolidayCalendar):
-    rules = []
-
+class BankHolidayCalendar(AbstractHolidayCalendar):
+    """
+    A calendar that honours the standard 5-day week in addition to the input list of dates.
+    """
     def __init__(self, dates):
         for bank_holiday in dates:
             bank_holiday_date = datetime.strptime(bank_holiday["date"], "%Y-%m-%d")
             self.rules.append(
-                CalendarFromJson.holiday_from_datetime(
+                BankHolidayCalendar.holiday_from_datetime(
                     bank_holiday["title"], bank_holiday_date
                 )
             )
         AbstractHolidayCalendar.__init__(self)
 
-    @staticmethod
-    def holiday_from_datetime(name, date):
-        return Holiday(name, year=date.year, month=date.month, day=date.day)
-
 
 class UnitedKingdomBankHolidays(object):
+    """
+    A representation of the bank holiday calendars in the United Kingdom.
+
+    This class exposes a function for each unique calendar: England & Wales, Northern Ireland, and Scotland.
+    """
     _calendar = {}
 
     def __init__(self):
@@ -44,29 +49,29 @@ class UnitedKingdomBankHolidays(object):
             json_calendar = json.loads(data.read())
 
             for country in json_calendar.keys():
-                self._calendar[country] = CalendarFromJson(
+                self._calendar[country] = BankHolidayCalendar(
                     json_calendar[country]["events"]
                 )
 
-    def england_and_wales(self) -> CalendarFromJson:
+    def england_and_wales(self) -> BankHolidayCalendar:
         """
         :return: a calendar representation of bank holidays in England and Wales
         """
         return self._calendar["england-and-wales"]
 
-    def scotland(self) -> CalendarFromJson:
+    def scotland(self) -> BankHolidayCalendar:
         """
         :return: a calendar representation of bank holidays in Scotland
         """
         return self._calendar["scotland"]
 
-    def northern_ireland(self) -> CalendarFromJson:
+    def northern_ireland(self) -> BankHolidayCalendar:
         """
         :return: a calendar representation of bank holidays in Northern Ireland
         """
         return self._calendar["northern-ireland"]
 
-    def from_country(self, country: Country) -> CalendarFromJson:
+    def from_country(self, country: Country) -> BankHolidayCalendar:
         """
         Return the bank holiday calendar for the input country.
 
@@ -81,7 +86,7 @@ class UnitedKingdomBankHolidays(object):
             return self.scotland()
 
 
-def working_days(count: int, calendar: CalendarFromJson) -> BusinessDays:
+def working_days(count: int, calendar: BankHolidayCalendar) -> BusinessDays:
     """
     A pandas representation of a period with the given number of working days using a specified calendar.
 
@@ -92,5 +97,22 @@ def working_days(count: int, calendar: CalendarFromJson) -> BusinessDays:
     return BusinessDays(count, calendar=calendar)
 
 
-def as_date(timestamp):
+def as_date(timestamp) -> date:
+    """
+    Transforms a pandas._libs.tslibs.Timestamp into a datetime.date object
+
+    :param timestamp: a pandas Timestamp object
+    :return: the equivalent python date object
+    """
     return timestamp.to_pydatetime().date()
+
+
+def holiday_from_datetime(name: str, original_datetime: datetime) -> Holiday:
+    """
+    Transforms a named datetime.datetime into a pandas.tseries.holiday.Holiday
+
+    :param name: the name of the holiday
+    :param original_datetime: a representation of the holiday as a datetime
+    :return: the pandas.tseries.holiday.Holiday representation of the datetime
+    """
+    return Holiday(name, year=original_datetime.year, month=original_datetime.month, day=original_datetime.day)
