@@ -31,8 +31,8 @@ class StatementPublishDate(object):
         """
         election_type, poll_date = type_and_poll_date(election_id)
 
-        if election_id in self.election_id_lookup:
-            return self.election_id_lookup[election_id](poll_date)
+        if election_type in self.election_id_lookup:
+            return self.election_id_lookup[election_type](poll_date)
         else:
             raise AmbiguousElectionId(election_id)
 
