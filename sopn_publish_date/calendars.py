@@ -14,40 +14,6 @@ class Country(Enum):
     WALES = 4
 
 
-class UnitedKingdomBankHolidays(object):
-    calendar = {}
-
-    def __init__(self):
-        bank_holiday_json = os.path.join(
-            os.path.dirname(__file__), "bank-holidays.json"
-        )
-
-        with open(bank_holiday_json, "r") as data:
-            json_calendar = json.loads(data.read())
-
-            for country in json_calendar.keys():
-                self.calendar[country] = CalendarFromJson(
-                    json_calendar[country]["events"]
-                )
-
-    def england_and_wales(self):
-        return self.calendar["england-and-wales"]
-
-    def scotland(self):
-        return self.calendar["scotland"]
-
-    def northern_ireland(self):
-        return self.calendar["northern-ireland"]
-
-    def from_country(self, country: Country):
-        if country == Country.ENGLAND or country == Country.WALES:
-            return self.england_and_wales()
-        elif country == Country.NORTHERN_IRELAND:
-            return self.northern_ireland()
-        else:
-            return self.scotland()
-
-
 class CalendarFromJson(AbstractHolidayCalendar):
     rules = []
 
@@ -66,7 +32,56 @@ class CalendarFromJson(AbstractHolidayCalendar):
         return Holiday(name, year=date.year, month=date.month, day=date.day)
 
 
-def working_days(count, calendar):
+class UnitedKingdomBankHolidays(object):
+    _calendar = {}
+
+    def __init__(self):
+        bank_holiday_json = os.path.join(
+            os.path.dirname(__file__), "bank-holidays.json"
+        )
+
+        with open(bank_holiday_json, "r") as data:
+            json_calendar = json.loads(data.read())
+
+            for country in json_calendar.keys():
+                self._calendar[country] = CalendarFromJson(
+                    json_calendar[country]["events"]
+                )
+
+    def england_and_wales(self) -> CalendarFromJson:
+        """
+        :return: a calendar representation of bank holidays in England and Wales
+        """
+        return self._calendar["england-and-wales"]
+
+    def scotland(self) -> CalendarFromJson:
+        """
+        :return: a calendar representation of bank holidays in Scotland
+        """
+        return self._calendar["scotland"]
+
+    def northern_ireland(self) -> CalendarFromJson:
+        """
+        :return: a calendar representation of bank holidays in Northern Ireland
+        """
+        return self._calendar["northern-ireland"]
+
+    def from_country(self, country: Country) -> CalendarFromJson:
+        """
+        Return the bank holiday calendar for the input country.
+
+        :param country: the country to retrieve the calendar for
+        :return: the corresponding calendar
+        """
+        if country == Country.ENGLAND or country == Country.WALES:
+            return self.england_and_wales()
+        elif country == Country.NORTHERN_IRELAND:
+            return self.northern_ireland()
+        else:
+            return self.scotland()
+
+
+def working_days(count: int, calendar: CalendarFromJson):
     return CDay(count, calendar=calendar)
 
 
