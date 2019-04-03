@@ -13,26 +13,18 @@
 
 The [bank holidays JSON](./sopn_publish_date/bank-holidays.json) is provided by [gov.uk](https://www.gov.uk/bank-holidays.json) under the [Open Government Licence](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
 
-## Todo
-
-Election types:
+## Supported Election Types
 
  - [x] Local
- - [x] Parliament
+ - [x] United Kingdom Parliament
  - [x] Scottish Parliament
  - [x] National Assembly for Wales
  - [x] Northern Ireland Assembly
  - [x] Mayoral
  - [x] Mayoral (London)
- - [ ] EU parliament
+ - [x] European Parliament
  - [x] Greater London Assembly
  - [x] Police and Crime commissioner
- 
-Calendars:
- - [x] England + Wales
- - [x] Scotland
- - [x] Northern Ireland
- - [x] Fixed-date bank holidays e.g. royal weddings
 
 ## Useful Links (delete pre-1.0)
 
