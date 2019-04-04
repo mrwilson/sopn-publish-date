@@ -1,8 +1,9 @@
 # sopn-publish-date
 
 [![Build Status](https://travis-ci.org/mrwilson/sopn-publish-date.svg?branch=master)](https://travis-ci.org/mrwilson/sopn-publish-date)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![Documentation Status](https://readthedocs.org/projects/sopn-publish-date/badge/?version=latest)](https://sopn-publish-date.readthedocs.io/en/latest/overview.html?badge=latest)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
 > Given the polling day of an election in the UK, when should the Statement of Persons Nominated (SoPN) be published?
 
 When an election is called in the United Kingdom, the voting public must have access to the list of candidates who have been nominated to that post.
@@ -29,7 +30,11 @@ print(publish_date.national_assembly_for_wales(date(2016, 5, 5)))
 
 # datetime.date(2016, 4, 7)
 ```
- 
+
+## Documentation
+
+Hosted by readthedocs at [https://sopn-publish-date.readthedocs.io/](https://sopn-publish-date.readthedocs.io/en/latest/overview.html)
+
 ## Installation
 
 `pip install sopn_publish_date`
