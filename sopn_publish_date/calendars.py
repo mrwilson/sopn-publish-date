@@ -2,8 +2,16 @@ import json
 import os
 from datetime import datetime, date
 
-from pandas.tseries.holiday import AbstractHolidayCalendar, Holiday
-from pandas.tseries.offsets import CDay as BusinessDays
+from pandas.tseries.holiday import (
+    AbstractHolidayCalendar,
+    Holiday,
+    GoodFriday,
+    EasterMonday,
+    next_monday,
+    next_monday_or_tuesday,
+    MO,
+)
+from pandas.tseries.offsets import CDay as BusinessDays, DateOffset
 from enum import Enum
 
 
@@ -19,6 +27,10 @@ class Country(Enum):
 
 
 class BankHolidayCalendar(AbstractHolidayCalendar):
+    pass
+
+
+class UKBankHolidayCalendar(AbstractHolidayCalendar):
     """
     A calendar that honours the standard 5-day week in addition to the input list of dates.
     """
@@ -30,6 +42,30 @@ class BankHolidayCalendar(AbstractHolidayCalendar):
                 holiday_from_datetime(bank_holiday["title"], bank_holiday_date)
             )
         AbstractHolidayCalendar.__init__(self)
+
+
+class GibraltarBankHolidays(BankHolidayCalendar):
+    def __init__(self):
+        BankHolidayCalendar.__init__(self, rules=[
+            Holiday("New Years Day", month=1, day=1, observance=next_monday),
+            Holiday("Commonwealth Day", month=3, day=1, offset=DateOffset(weekday=MO(2))),
+            GoodFriday,
+            EasterMonday,
+            Holiday("Workers Day", month=4, day=28, observance=next_monday),
+            Holiday(
+                "Early May bank holiday", month=5, day=1, offset=DateOffset(weekday=MO(1))
+            ),
+            Holiday(
+                "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
+            ),
+            Holiday("Queen's Birthday", month=6, day=1, offset=DateOffset(weekday=MO(2))),
+            Holiday(
+                "Summer bank holiday", month=8, day=31, offset=DateOffset(weekday=MO(-1))
+            ),
+            Holiday("Gibraltar Day", month=9, day=10, observance=next_monday),
+            Holiday("Christmas Day", month=12, day=25, observance=next_monday),
+            Holiday("Boxing Day", month=12, day=26, observance=next_monday_or_tuesday),
+        ])
 
 
 class UnitedKingdomBankHolidays(object):
@@ -50,7 +86,7 @@ class UnitedKingdomBankHolidays(object):
             json_calendar = json.loads(data.read())
 
             for country in json_calendar.keys():
-                self._calendar[country] = BankHolidayCalendar(
+                self._calendar[country] = UKBankHolidayCalendar(
                     json_calendar[country]["events"]
                 )
 
@@ -59,6 +95,12 @@ class UnitedKingdomBankHolidays(object):
         :return: a calendar representation of bank holidays in England and Wales
         """
         return self._calendar["england-and-wales"]
+
+    def gibraltar(self) -> BankHolidayCalendar:
+        """
+        :return: a calendar representation of Gibraltar
+        """
+        return GibraltarBankHolidays()
 
     def scotland(self) -> BankHolidayCalendar:
         """
