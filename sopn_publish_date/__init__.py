@@ -3,6 +3,7 @@ from sopn_publish_date.calendars import (
     UnitedKingdomBankHolidays,
     as_date,
     Country,
+    Region,
 )
 from sopn_publish_date.election_ids import type_and_poll_date, AmbiguousElectionId
 
@@ -80,16 +81,33 @@ class StatementPublishDate(object):
         """
         return as_date(poll_date - working_days(23, self.calendar.england_and_wales()))
 
-    def european_parliament(self, poll_date: date) -> date:
+    def european_parliament(self, poll_date: date, region: Region) -> date:
         """
         Calculate the publish date for an election to the European Parliament
 
         This is set out in `The European Parliamentary Elections (Amendment) Regulations 2009 <https://www.legislation.gov.uk/uksi/2009/186/made>`_
 
+        As Gibraltar is included within *South West England* but has a different bank holiday calendar, it's plausible that the SoPN date for *South West England* will differ from the rest of England.
+
         :param poll_date: a datetime representing the date of the poll
+        :param region: the region of the UK and Gibraltar where the poll is being run
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
+
+        def date_with_calendar(calendar):
+            return as_date(poll_date - working_days(19, calendar))
+
+        if region == Region.SCOTLAND:
+            return date_with_calendar(self.calendar.scotland())
+        elif region == Region.NORTHERN_IRELAND:
+            return date_with_calendar(self.calendar.northern_ireland())
+        elif region == Region.SOUTH_WEST_ENGLAND:
+            return min(
+                date_with_calendar(self.calendar.england_and_wales()),
+                date_with_calendar(self.calendar.gibraltar()),
+            )
+        else:
+            return date_with_calendar(self.calendar.england_and_wales())
 
     def police_and_crime_commissioner(self, poll_date: date) -> date:
         """
