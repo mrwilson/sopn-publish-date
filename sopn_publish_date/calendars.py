@@ -65,26 +65,44 @@ class UKBankHolidayCalendar(AbstractHolidayCalendar):
 
 class GibraltarBankHolidays(BankHolidayCalendar):
     def __init__(self):
-        BankHolidayCalendar.__init__(self, rules=[
-            Holiday("New Years Day", month=1, day=1, observance=next_monday),
-            Holiday("Commonwealth Day", month=3, day=1, offset=DateOffset(weekday=MO(2))),
-            GoodFriday,
-            EasterMonday,
-            Holiday("Workers Day", month=4, day=28, observance=next_monday),
-            Holiday(
-                "Early May bank holiday", month=5, day=1, offset=DateOffset(weekday=MO(1))
-            ),
-            Holiday(
-                "Spring bank holiday", month=5, day=31, offset=DateOffset(weekday=MO(-1))
-            ),
-            Holiday("Queen's Birthday", month=6, day=1, offset=DateOffset(weekday=MO(2))),
-            Holiday(
-                "Summer bank holiday", month=8, day=31, offset=DateOffset(weekday=MO(-1))
-            ),
-            Holiday("Gibraltar Day", month=9, day=10, observance=next_monday),
-            Holiday("Christmas Day", month=12, day=25, observance=next_monday),
-            Holiday("Boxing Day", month=12, day=26, observance=next_monday_or_tuesday),
-        ])
+        BankHolidayCalendar.__init__(
+            self,
+            rules=[
+                Holiday("New Years Day", month=1, day=1, observance=next_monday),
+                Holiday(
+                    "Commonwealth Day", month=3, day=1, offset=DateOffset(weekday=MO(2))
+                ),
+                GoodFriday,
+                EasterMonday,
+                Holiday("Worker's Day", month=4, day=28, observance=next_monday),
+                Holiday(
+                    "Early May bank holiday",
+                    month=5,
+                    day=1,
+                    offset=DateOffset(weekday=MO(1)),
+                ),
+                Holiday(
+                    "Spring bank holiday",
+                    month=5,
+                    day=31,
+                    offset=DateOffset(weekday=MO(-1)),
+                ),
+                Holiday(
+                    "Queen's Birthday", month=6, day=1, offset=DateOffset(weekday=MO(2))
+                ),
+                Holiday(
+                    "Summer bank holiday",
+                    month=8,
+                    day=31,
+                    offset=DateOffset(weekday=MO(-1)),
+                ),
+                Holiday("Gibraltar Day", month=9, day=10, observance=next_monday),
+                Holiday("Christmas Day", month=12, day=25, observance=next_monday),
+                Holiday(
+                    "Boxing Day", month=12, day=26, observance=next_monday_or_tuesday
+                ),
+            ],
+        )
 
 
 class UnitedKingdomBankHolidays(object):

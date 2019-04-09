@@ -19,7 +19,7 @@ class StatementPublishDate(object):
             "gla": self.greater_london_assembly,
             "pcc": self.police_and_crime_commissioner,
             "mayor": self.mayor,
-            "parl": self.uk_parliament
+            "parl": self.uk_parliament,
         }
         self.calendar = UnitedKingdomBankHolidays()
 
@@ -141,7 +141,9 @@ class StatementPublishDate(object):
         :param country: the country in which the election is being run
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(19, self.calendar.from_country(country)))
+        return as_date(
+            poll_date - working_days(19, self.calendar.from_country(country))
+        )
 
     def local(self, poll_date: date, country: Country):
         """
