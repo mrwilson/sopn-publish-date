@@ -64,6 +64,9 @@ class UKBankHolidayCalendar(AbstractHolidayCalendar):
 
 
 class GibraltarBankHolidays(BankHolidayCalendar):
+    """
+    A calendar that represents the public holidays of Gibraltar.
+    """
     def __init__(self):
         BankHolidayCalendar.__init__(
             self,
@@ -135,7 +138,7 @@ class UnitedKingdomBankHolidays(object):
 
     def gibraltar(self) -> BankHolidayCalendar:
         """
-        :return: a calendar representation of Gibraltar
+        :return: a calendar representation of bank holidays in Gibraltar
         """
         return GibraltarBankHolidays()
 
