@@ -67,6 +67,7 @@ class GibraltarBankHolidays(BankHolidayCalendar):
     """
     A calendar that represents the public holidays of Gibraltar.
     """
+
     def __init__(self):
         BankHolidayCalendar.__init__(
             self,

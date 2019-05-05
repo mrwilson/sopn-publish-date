@@ -5,7 +5,7 @@ from sopn_publish_date.calendars import (
     Country,
     Region,
 )
-from sopn_publish_date.election_ids import type_and_poll_date, AmbiguousElectionId
+from sopn_publish_date.election_ids import type_and_poll_date, AmbiguousElectionIdError
 
 from datetime import date
 
@@ -35,7 +35,7 @@ class StatementPublishDate(object):
         if election_type in self.election_id_lookup:
             return self.election_id_lookup[election_type](poll_date)
         else:
-            raise AmbiguousElectionId(election_id)
+            raise AmbiguousElectionIdError(election_id)
 
     def northern_ireland_assembly(self, poll_date: date) -> date:
         """

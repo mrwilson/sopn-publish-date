@@ -1,7 +1,7 @@
 from datetime import datetime, date
 
 
-class InvalidElectionId(BaseException):
+class InvalidElectionIdError(BaseException):
     """
     An exception type to represent when an election id does not confirm to DemocracyClub's `uk-election-ids <https://elections.democracyclub.org.uk/reference_definition/>`_ format
     """
@@ -13,7 +13,7 @@ class InvalidElectionId(BaseException):
         return "Parameter [%s] is not in election id format" % self.election_id
 
 
-class AmbiguousElectionId(BaseException):
+class AmbiguousElectionIdError(BaseException):
     """
     An exception type to represent when an election id (usually a group such as `local.2019-05-02`) can correspond to elections in multiple countries with different legislation governing the publish date of Statements of Persons Nominated.
     """
@@ -39,4 +39,4 @@ def type_and_poll_date(election_id: str) -> (str, date):
 
         return election_type, date_of_poll
     except Exception:
-        raise InvalidElectionId(election_id)
+        raise InvalidElectionIdError(election_id)
