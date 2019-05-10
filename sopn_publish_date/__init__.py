@@ -161,10 +161,10 @@ class StatementPublishDate(object):
         """
 
         country_specific_duration = {
-            Country.ENGLAND: 19,
+            Country.ENGLAND: 18,
             Country.NORTHERN_IRELAND: 16,
             Country.SCOTLAND: 23,
-            Country.WALES: 19,
+            Country.WALES: 18,
         }
 
         days_prior = country_specific_duration[country]
