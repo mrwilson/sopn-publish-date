@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mrwilson/sopn-publish-date.svg?branch=master)](https://travis-ci.org/mrwilson/sopn-publish-date)
 [![Documentation Status](https://readthedocs.org/projects/sopn-publish-date/badge/?version=latest)](https://sopn-publish-date.readthedocs.io/en/latest/overview.html?badge=latest)
+[![Coverage Status](https://coveralls.io/repos/github/mrwilson/sopn-publish-date/badge.svg?branch=master)](https://coveralls.io/github/mrwilson/sopn-publish-date?branch=master)
 [![PyPI](https://img.shields.io/pypi/v/sopn-publish-date.svg)](https://pypi.org/project/sopn-publish-date/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
