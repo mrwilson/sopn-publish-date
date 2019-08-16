@@ -8,3 +8,5 @@ install:
  - pip install -r requirements.txt
 script:
  - python -m pytest -v --cov=sopn_publish_date
+after_script:
+ - COVERALLS_REPO_TOKEN=$coveralls_repo_token coveralls
