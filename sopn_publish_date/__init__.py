@@ -5,7 +5,11 @@ from sopn_publish_date.calendars import (
     Country,
     Region,
 )
-from sopn_publish_date.election_ids import type_and_poll_date, AmbiguousElectionIdError
+from sopn_publish_date.election_ids import (
+    type_and_poll_date,
+    AmbiguousElectionIdError,
+    NoSuchElectionTypeError,
+)
 
 from datetime import date
 
@@ -19,23 +23,50 @@ class StatementPublishDate(object):
             "gla": self.greater_london_assembly,
             "pcc": self.police_and_crime_commissioner,
             "mayor": self.mayor,
-            "parl": self.uk_parliament,
         }
         self.calendar = UnitedKingdomBankHolidays()
 
-    def for_id(self, election_id: str) -> date:
+    def for_id(self, election_id: str, country: str = None) -> date:
         """
-        Calculate the publish date for an election given in `uk-election-ids <https://elections.democracyclub.org.uk/reference_definition/>`_ format, or raise an exception if that election id is ambiguous (could correspond to elections in multiple countries with different electoral legislation)
+        Calculate the publish date for an election given in `uk-election-ids <https://elections.democracyclub.org.uk/reference_definition/>`_ format and an optional country if necessary (for example, local or parliamentary elections), or raise an exception if that election id is ambiguous (could correspond to elections in multiple countries with different electoral legislation)
 
         :param election_id: a string representing an election id in uk-election-ids format
+        :param country: an optional string representing the country where the election will be held
         :return: a datetime representing the expected publish date
         """
+
         election_type, poll_date = type_and_poll_date(election_id)
+
+        countries = {
+            "ENG": Country.ENGLAND,
+            "WLS": Country.WALES,
+            "SCT": Country.SCOTLAND,
+            "NIR": Country.NORTHERN_IRELAND,
+        }
+
+        def valid_election_type(el_type):
+            return el_type in self.election_id_lookup or el_type in ["local", "parl"]
+
+        def requires_country(el_type):
+            return el_type not in self.election_id_lookup
+
+        if not valid_election_type(election_type):
+            raise NoSuchElectionTypeError(election_type)
+
+        if requires_country(election_type) and (
+            country is None or country not in countries
+        ):
+            raise AmbiguousElectionIdError(election_id, country)
 
         if election_type in self.election_id_lookup:
             return self.election_id_lookup[election_type](poll_date)
-        else:
-            raise AmbiguousElectionIdError(election_id)
+
+        real_country = countries[country]
+
+        if election_type == "local":
+            return self.local(poll_date, country=real_country)
+        elif election_type == "parl":
+            return self.uk_parliament(poll_date, country=real_country)
 
     def northern_ireland_assembly(self, poll_date: date) -> date:
         """
