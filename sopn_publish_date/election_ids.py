@@ -13,16 +13,35 @@ class InvalidElectionIdError(BaseException):
         return "Parameter [%s] is not in election id format" % self.election_id
 
 
+class NoSuchElectionTypeError(BaseException):
+    """
+    An exception type to represent when an election type doesn't actually represent a valid election.
+    """
+
+    def __init__(self, election_type: str):
+        self.election_type = election_type
+
+    def __str__(self):
+        return "Election type [%s] does not exist" % self.election_type
+
+
 class AmbiguousElectionIdError(BaseException):
     """
     An exception type to represent when an election id (usually a group such as `local.2019-05-02`) can correspond to elections in multiple countries with different legislation governing the publish date of Statements of Persons Nominated.
     """
 
-    def __init__(self, election_id: str):
+    def __init__(self, election_id: str, country: str = None):
         self.election_id = election_id
+        self.country = country
 
     def __str__(self):
-        return "Cannot derive country from election id [%s]" % self.election_id
+        if self.country:
+            return "Election id [%s] requires a valid country, got [%s]" % (
+                self.election_id,
+                self.country,
+            )
+        else:
+            return "Cannot derive country from election id [%s]" % self.election_id
 
 
 def type_and_poll_date(election_id: str) -> (str, date):
