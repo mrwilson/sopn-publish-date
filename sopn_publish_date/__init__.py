@@ -38,7 +38,7 @@ class StatementPublishDate(object):
         election_type, poll_date = type_and_poll_date(election_id)
 
         def valid_election_type(el_type):
-            return el_type in self.election_id_lookup or el_type in ["local", "parl"]
+            return el_type in self.election_id_lookup or el_type in ["local", "parl", "europarl"]
 
         def requires_country(el_type):
             return el_type not in self.election_id_lookup
@@ -56,6 +56,8 @@ class StatementPublishDate(object):
             return self.local(poll_date, country=country)
         elif election_type == "parl":
             return self.uk_parliament(poll_date, country=country)
+        elif election_type == "europarl":
+            return None
 
     def northern_ireland_assembly(self, poll_date: date) -> date:
         """
