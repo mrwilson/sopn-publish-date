@@ -26,23 +26,16 @@ class StatementPublishDate(object):
         }
         self.calendar = UnitedKingdomBankHolidays()
 
-    def for_id(self, election_id: str, country: str = None) -> date:
+    def for_id(self, election_id: str, country: Country = None) -> date:
         """
         Calculate the publish date for an election given in `uk-election-ids <https://elections.democracyclub.org.uk/reference_definition/>`_ format and an optional country if necessary (for example, local or parliamentary elections), or raise an exception if that election id is ambiguous (could correspond to elections in multiple countries with different electoral legislation)
 
         :param election_id: a string representing an election id in uk-election-ids format
-        :param country: an optional string representing the country where the election will be held
+        :param country: an optional Country representing the country where the election will be held
         :return: a datetime representing the expected publish date
         """
 
         election_type, poll_date = type_and_poll_date(election_id)
-
-        countries = {
-            "ENG": Country.ENGLAND,
-            "WLS": Country.WALES,
-            "SCT": Country.SCOTLAND,
-            "NIR": Country.NORTHERN_IRELAND,
-        }
 
         def valid_election_type(el_type):
             return el_type in self.election_id_lookup or el_type in ["local", "parl"]
@@ -53,20 +46,16 @@ class StatementPublishDate(object):
         if not valid_election_type(election_type):
             raise NoSuchElectionTypeError(election_type)
 
-        if requires_country(election_type) and (
-            country is None or country not in countries
-        ):
-            raise AmbiguousElectionIdError(election_id, country)
+        if requires_country(election_type) and country is None:
+            raise AmbiguousElectionIdError(election_id)
 
         if election_type in self.election_id_lookup:
             return self.election_id_lookup[election_type](poll_date)
 
-        real_country = countries[country]
-
         if election_type == "local":
-            return self.local(poll_date, country=real_country)
+            return self.local(poll_date, country=country)
         elif election_type == "parl":
-            return self.uk_parliament(poll_date, country=real_country)
+            return self.uk_parliament(poll_date, country=country)
 
     def northern_ireland_assembly(self, poll_date: date) -> date:
         """
