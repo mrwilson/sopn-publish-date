@@ -30,18 +30,11 @@ class AmbiguousElectionIdError(BaseException):
     An exception type to represent when an election id (usually a group such as `local.2019-05-02`) can correspond to elections in multiple countries with different legislation governing the publish date of Statements of Persons Nominated.
     """
 
-    def __init__(self, election_id: str, country: str = None):
+    def __init__(self, election_id: str):
         self.election_id = election_id
-        self.country = country
 
     def __str__(self):
-        if self.country:
-            return "Election id [%s] requires a valid country, got [%s]" % (
-                self.election_id,
-                self.country,
-            )
-        else:
-            return "Cannot derive country from election id [%s]" % self.election_id
+        return "Cannot derive country from election id [%s]" % self.election_id
 
 
 def type_and_poll_date(election_id: str) -> (str, date):
