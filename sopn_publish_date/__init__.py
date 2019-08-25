@@ -28,7 +28,9 @@ class StatementPublishDate(object):
 
     def for_id(self, election_id: str, country: Country = None) -> date:
         """
-        Calculate the publish date for an election given in `uk-election-ids <https://elections.democracyclub.org.uk/reference_definition/>`_ format and an optional country if necessary (for example, local or parliamentary elections), or raise an exception if that election id is ambiguous (could correspond to elections in multiple countries with different electoral legislation)
+        Calculate the publish date for an election given in `uk-election-ids <https://elections.democracyclub.org.uk/reference_definition/>`_ format and an optional country if necessary (for example, local or parliamentary elections).
+
+        This function returns *None* for elections to the European Parliament, and will raise an exception if the election id is ambiguous (could correspond to elections in multiple countries with different electoral legislation).
 
         :param election_id: a string representing an election id in uk-election-ids format
         :param country: an optional Country representing the country where the election will be held
