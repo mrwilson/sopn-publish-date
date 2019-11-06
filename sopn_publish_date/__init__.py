@@ -159,7 +159,7 @@ class StatementPublishDate(object):
         """
         return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
 
-    def uk_parliament(self, poll_date: date, country: Country = Country.ENGLAND):
+    def uk_parliament(self, poll_date: date, country: Country = None):
         """
         Calculate the publish date for an election to the Parliament of the United Kingdom
 
@@ -169,9 +169,25 @@ class StatementPublishDate(object):
         :param country: the country in which the election is being run
         :return: a datetime representing the expected publish date
         """
-        return as_date(
-            poll_date - working_days(19, self.calendar.from_country(country))
-        )
+
+        def date_for_country(country_of_election: Country) -> date:
+            calendar = self.calendar.from_country(country_of_election)
+            return as_date(poll_date - working_days(19, calendar))
+
+        if country:
+            return date_for_country(country)
+
+        else:
+            possible_dates = [
+                date_for_country(country)
+                for country in [
+                    Country.ENGLAND,
+                    Country.SCOTLAND,
+                    Country.NORTHERN_IRELAND,
+                ]
+            ]
+
+            return min(possible_dates)
 
     def local(self, poll_date: date, country: Country):
         """
