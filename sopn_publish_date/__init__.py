@@ -47,7 +47,7 @@ class StatementPublishDate(object):
             ]
 
         def requires_country(el_type):
-            return el_type not in self.election_id_lookup
+            return el_type in ["local", "europarl"]
 
         if not valid_election_type(election_type):
             raise NoSuchElectionTypeError(election_type)
