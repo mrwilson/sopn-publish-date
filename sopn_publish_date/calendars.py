@@ -54,13 +54,17 @@ class UKBankHolidayCalendar(AbstractHolidayCalendar):
     A calendar that honours the standard 5-day week in addition to the input list of dates.
     """
 
+    @staticmethod
+    def create_holiday_from_entry(entry: dict) -> Holiday:
+        holiday_date = datetime.strptime(entry["date"], "%Y-%m-%d")
+        return holiday_from_datetime(entry["title"], holiday_date)
+
     def __init__(self, dates):
-        for bank_holiday in dates:
-            bank_holiday_date = datetime.strptime(bank_holiday["date"], "%Y-%m-%d")
-            self.rules.append(
-                holiday_from_datetime(bank_holiday["title"], bank_holiday_date)
-            )
         AbstractHolidayCalendar.__init__(self)
+
+        self.rules = [
+            UKBankHolidayCalendar.create_holiday_from_entry(entry) for entry in dates
+        ]
 
 
 class GibraltarBankHolidays(BankHolidayCalendar):
