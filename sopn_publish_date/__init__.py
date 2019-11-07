@@ -163,10 +163,10 @@ class StatementPublishDate(object):
         """
         Calculate the publish date for an election to the Parliament of the United Kingdom
 
-        This is set out in `Electoral Registration and Administration Act 2013 <https://www.legislation.gov.uk/ukpga/2013/6/section/14>`_
+        This is set out in `Representation of the People Act 1983 <https://www.legislation.gov.uk/ukpga/1983/2/contents>`_ and its amendments.
 
         :param poll_date: a datetime representing the date of the poll
-        :param country: the country in which the election is being run
+        :param country: an optional Country representing the country where the election will be held
         :return: a datetime representing the expected publish date
         """
 
