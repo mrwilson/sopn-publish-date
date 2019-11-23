@@ -62,9 +62,15 @@ class UKBankHolidayCalendar(AbstractHolidayCalendar):
     def __init__(self, dates):
         AbstractHolidayCalendar.__init__(self)
 
-        self.rules = [
+        christmas_eve = Holiday("Christmas Eve", month=12, day=24)
+
+        days_not_counted = [
             UKBankHolidayCalendar.create_holiday_from_entry(entry) for entry in dates
         ]
+
+        days_not_counted.append(christmas_eve)
+
+        self.rules = days_not_counted
 
 
 class GibraltarBankHolidays(BankHolidayCalendar):
