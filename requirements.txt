@@ -2,4 +2,4 @@ pandas==0.25.3
 pytest==5.3.2
 sphinx-markdown-tables==0.0.10
 pytest-cov==2.8.1
-coveralls==1.9.2
+coveralls==1.10.0
