@@ -1,4 +1,4 @@
-pandas==0.25.3
+pandas==1.0.0
 pytest==5.3.5
 sphinx-markdown-tables==0.0.12
 pytest-cov==2.8.1
