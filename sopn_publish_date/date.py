@@ -6,7 +6,8 @@ SUNDAY = 6
 
 
 class DateMatcher:
-    def __init__(self, day, month, year=None):
+    def __init__(self, day, month, year=None, name=None):
+        self.name = name
         self.month = month
         self.day = day
         self.year = year
