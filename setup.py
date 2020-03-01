@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup(
     name="sopn-publish-date",
     url="https://github.com/mrwilson/sopn-publish-date",
-    version="1.3.2",
+    version="1.4.0",
     description="Derive publish dates of Statements of Persons Nominated for UK elections",
     long_description=long_description,
     long_description_content_type="text/markdown",
