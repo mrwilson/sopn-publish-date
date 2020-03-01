@@ -15,7 +15,6 @@ setup(
     license="MIT",
     packages=find_packages(),
     package_data={"sopn_publish_date": ["bank-holidays.json"]},
-    install_requires=("pandas"),
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Topic :: Software Development",
