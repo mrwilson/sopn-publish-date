@@ -14,6 +14,8 @@ from pandas.tseries.holiday import (
 from pandas.tseries.offsets import CDay as BusinessDays, DateOffset
 from enum import Enum
 
+from sopn_publish_date.date import days_before, DateMatcher
+
 
 class Country(Enum):
     """
@@ -199,6 +201,15 @@ def as_date(timestamp) -> date:
     :return: the equivalent python date object
     """
     return timestamp.to_pydatetime().date()
+
+
+def working_days_before(poll_date: date, count: int, calendar: BankHolidayCalendar):
+    exempted_dates = [
+        DateMatcher(year=holiday.year, month=holiday.month, day=holiday.day)
+        for holiday in calendar.rules
+    ]
+
+    return days_before(poll_date, count, exempted_dates)
 
 
 def holiday_from_datetime(name: str, original_datetime: datetime) -> Holiday:

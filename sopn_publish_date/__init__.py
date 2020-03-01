@@ -4,6 +4,7 @@ from sopn_publish_date.calendars import (
     as_date,
     Country,
     Region,
+    working_days_before,
 )
 from sopn_publish_date.election_ids import (
     type_and_poll_date,
@@ -74,7 +75,7 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(16, self.calendar.northern_ireland()))
+        return working_days_before(poll_date, 16, self.calendar.northern_ireland())
 
     def scottish_parliament(self, poll_date: date) -> date:
         """
@@ -85,7 +86,7 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(23, self.calendar.scotland()))
+        return working_days_before(poll_date, 23, self.calendar.scotland())
 
     def national_assembly_for_wales(self, poll_date: date) -> date:
         """
@@ -96,7 +97,7 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
+        return working_days_before(poll_date, 19, self.calendar.england_and_wales())
 
     def greater_london_assembly(self, poll_date: date) -> date:
         """
@@ -107,7 +108,7 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(23, self.calendar.england_and_wales()))
+        return working_days_before(poll_date, 23, self.calendar.england_and_wales())
 
     def european_parliament(self, poll_date: date, region: Region) -> date:
         """
@@ -146,7 +147,7 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(18, self.calendar.england_and_wales()))
+        return working_days_before(poll_date, 18, self.calendar.england_and_wales())
 
     def mayor(self, poll_date: date) -> date:
         """
@@ -157,7 +158,7 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
-        return as_date(poll_date - working_days(19, self.calendar.england_and_wales()))
+        return working_days_before(poll_date, 19, self.calendar.england_and_wales())
 
     def uk_parliament(self, poll_date: date, country: Country = None):
         """
@@ -172,7 +173,7 @@ class StatementPublishDate(object):
 
         def date_for_country(country_of_election: Country) -> date:
             calendar = self.calendar.from_country(country_of_election)
-            return as_date(poll_date - working_days(19, calendar))
+            return working_days_before(poll_date, 19, calendar)
 
         if country:
             return date_for_country(country)
@@ -213,6 +214,6 @@ class StatementPublishDate(object):
 
         days_prior = country_specific_duration[country]
 
-        return as_date(
-            poll_date - working_days(days_prior, self.calendar.from_country(country))
+        return working_days_before(
+            poll_date, days_prior, self.calendar.from_country(country)
         )
