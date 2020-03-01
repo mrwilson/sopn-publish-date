@@ -37,6 +37,10 @@ class Region(Enum):
 
 
 class FixedDates:
+    """
+    A set of fixed dates used in other calculations by this library.
+    """
+
     EUROPARL_GIBRALTAR_2019 = date(2019, 4, 24)
 
 
@@ -123,5 +127,14 @@ class UnitedKingdomBankHolidays(object):
             return self.scotland()
 
 
-def working_days_before(poll_date: date, count: int, calendar: BankHolidayCalendar):
+def working_days_before(poll_date: date, count: int, calendar: BankHolidayCalendar) -> date:
+    """
+    Return date corresponding to `count` working days before `poll_date` according to the given bank holiday calendar
+
+    :param poll_date: the date of the poll
+    :param count: the number of days before the poll date
+    :param calendar: the bank holiday calendar used in the calculation
+    :return: the calculated date
+    """
+
     return days_before(poll_date, count, calendar.exempted_dates())
