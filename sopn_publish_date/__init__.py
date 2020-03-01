@@ -5,6 +5,7 @@ from sopn_publish_date.calendars import (
     Country,
     Region,
     working_days_before,
+    FixedDates,
 )
 from sopn_publish_date.election_ids import (
     type_and_poll_date,
@@ -124,7 +125,7 @@ class StatementPublishDate(object):
         """
 
         def date_with_calendar(calendar):
-            return as_date(poll_date - working_days(19, calendar))
+            return working_days_before(poll_date, 19, calendar)
 
         if region == Region.SCOTLAND:
             return date_with_calendar(self.calendar.scotland())
@@ -133,7 +134,7 @@ class StatementPublishDate(object):
         elif region == Region.SOUTH_WEST_ENGLAND:
             return min(
                 date_with_calendar(self.calendar.england_and_wales()),
-                date_with_calendar(self.calendar.gibraltar()),
+                FixedDates.EUROPARL_GIBRALTAR_2019,
             )
         else:
             return date_with_calendar(self.calendar.england_and_wales())
