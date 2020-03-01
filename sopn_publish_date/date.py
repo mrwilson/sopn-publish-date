@@ -51,7 +51,7 @@ def days_before(poll_date: date, days: int, ignore: List[DateMatcher] = None) ->
         if poll_date.weekday() in [SATURDAY, SUNDAY]:
             continue
 
-        if any([day.matches(poll_date) for day in ignore]):
+        if ignore and any([day.matches(poll_date) for day in ignore]):
             continue
 
         days -= 1
