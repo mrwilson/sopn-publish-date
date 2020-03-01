@@ -3,9 +3,6 @@ import os
 from datetime import datetime, date
 from enum import Enum
 
-from pandas.tseries.holiday import AbstractHolidayCalendar, Holiday
-from pandas.tseries.offsets import CDay as BusinessDays
-
 from sopn_publish_date.date import days_before, DateMatcher
 
 
@@ -43,32 +40,32 @@ class FixedDates:
     EUROPARL_GIBRALTAR_2019 = date(2019, 4, 24)
 
 
-class BankHolidayCalendar(AbstractHolidayCalendar):
-    pass
-
-
-class UKBankHolidayCalendar(AbstractHolidayCalendar):
+class BankHolidayCalendar:
     """
     A calendar that honours the standard 5-day week in addition to the input list of dates.
     """
 
     @staticmethod
-    def create_holiday_from_entry(entry: dict) -> Holiday:
-        holiday_date = datetime.strptime(entry["date"], "%Y-%m-%d")
-        return holiday_from_datetime(entry["title"], holiday_date)
+    def create_matcher_from_entry(entry: dict) -> DateMatcher:
+        event_date = datetime.strptime(entry["date"], "%Y-%m-%d")
+
+        return DateMatcher(
+            year=event_date.year, month=event_date.month, day=event_date.day
+        )
 
     def __init__(self, dates):
-        AbstractHolidayCalendar.__init__(self)
-
-        christmas_eve = Holiday("Christmas Eve", month=12, day=24)
+        christmas_eve = DateMatcher(month=12, day=24)
 
         days_not_counted = [
-            UKBankHolidayCalendar.create_holiday_from_entry(entry) for entry in dates
+            BankHolidayCalendar.create_matcher_from_entry(entry) for entry in dates
         ]
 
         days_not_counted.append(christmas_eve)
 
-        self.rules = days_not_counted
+        self._exempted_dates = days_not_counted
+
+    def exempted_dates(self):
+        return self._exempted_dates
 
 
 class UnitedKingdomBankHolidays(object):
@@ -89,7 +86,7 @@ class UnitedKingdomBankHolidays(object):
             json_calendar = json.loads(data.read())
 
             for country in json_calendar.keys():
-                self._calendar[country] = UKBankHolidayCalendar(
+                self._calendar[country] = BankHolidayCalendar(
                     json_calendar[country]["events"]
                 )
 
@@ -126,47 +123,5 @@ class UnitedKingdomBankHolidays(object):
             return self.scotland()
 
 
-def working_days(count: int, calendar: BankHolidayCalendar) -> BusinessDays:
-    """
-    A pandas representation of a period with the given number of working days using a specified calendar.
-
-    :param count: number of working days
-    :param calendar: calendar representing bank holidays in a specific country
-    :return: a number of days to be used in date arithmetic that honours weekends and bank holidays
-    """
-    return BusinessDays(count, calendar=calendar)
-
-
-def as_date(timestamp) -> date:
-    """
-    Transforms a pandas._libs.tslibs.Timestamp into a datetime.date object
-
-    :param timestamp: a pandas Timestamp object
-    :return: the equivalent python date object
-    """
-    return timestamp.to_pydatetime().date()
-
-
 def working_days_before(poll_date: date, count: int, calendar: BankHolidayCalendar):
-    exempted_dates = [
-        DateMatcher(year=holiday.year, month=holiday.month, day=holiday.day)
-        for holiday in calendar.rules
-    ]
-
-    return days_before(poll_date, count, exempted_dates)
-
-
-def holiday_from_datetime(name: str, original_datetime: datetime) -> Holiday:
-    """
-    Transforms a named datetime.datetime into a pandas.tseries.holiday.Holiday
-
-    :param name: the name of the holiday
-    :param original_datetime: a representation of the holiday as a datetime
-    :return: the pandas.tseries.holiday.Holiday representation of the datetime
-    """
-    return Holiday(
-        name,
-        year=original_datetime.year,
-        month=original_datetime.month,
-        day=original_datetime.day,
-    )
+    return days_before(poll_date, count, calendar.exempted_dates())
