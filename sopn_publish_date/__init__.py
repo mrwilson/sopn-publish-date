@@ -11,6 +11,7 @@ from sopn_publish_date.election_ids import (
     NoSuchElectionTypeError,
 )
 
+from warnings import warn
 from datetime import date
 
 
@@ -96,6 +97,8 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
+        warn("national_assembly_for_wales is deprecated, use senedd_cymru instead", DeprecationWarning)
+
         return working_days_before(poll_date, 19, self.calendar.england_and_wales())
 
     def senedd_cymru(self, poll_date: date) -> date:
