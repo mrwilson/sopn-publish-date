@@ -21,6 +21,7 @@ class StatementPublishDate(object):
             "nia": self.northern_ireland_assembly,
             "sp": self.scottish_parliament,
             "naw": self.senedd_cymru,
+            "senedd": self.senedd_cymru,
             "gla": self.greater_london_assembly,
             "pcc": self.police_and_crime_commissioner,
             "mayor": self.mayor,
