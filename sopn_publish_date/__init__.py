@@ -97,7 +97,10 @@ class StatementPublishDate(object):
         :param poll_date: a datetime representing the date of the poll
         :return: a datetime representing the expected publish date
         """
-        warn("national_assembly_for_wales is deprecated, use senedd_cymru instead", DeprecationWarning)
+        warn(
+            "national_assembly_for_wales is deprecated, use senedd_cymru instead",
+            DeprecationWarning,
+        )
 
         return working_days_before(poll_date, 19, self.calendar.england_and_wales())
 
